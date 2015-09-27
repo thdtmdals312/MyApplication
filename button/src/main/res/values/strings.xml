@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="btnNate2">네이트 홈페이지 열기</string>
+    <string name="btn911">911 응급전화 걸기</string>
+    <string name="btnGal">갤러리 열기</string>
+    <string name="btnEnd">끝내기</string>
+</resources>
