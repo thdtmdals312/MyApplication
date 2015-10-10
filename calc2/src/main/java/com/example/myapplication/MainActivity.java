@@ -10,10 +10,10 @@ import android.widget.*;
 
 public class MainActivity extends AppCompatActivity {
     EditText edit1,edit2;
-    Button btnAdd,btnSub,btnMul,btnDiv;
+    Button btnAdd,btnSub,btnMul,btnDiv,btnRem;
     TextView textResult;
     String num1, num2;
-    Integer result;
+    Double result;
     Button[] numButtons = new Button[10];
     Integer[] numBtnIDs= {R.id.Btn0,R.id.Btn1,R.id.Btn2,R.id.Btn3,R.id.Btn4,
                             R.id.Btn5,R.id.Btn6,R.id.Btn7,R.id.Btn8,R.id.Btn9};
@@ -30,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
         btnSub = (Button) findViewById(R.id.BtnSub);
         btnMul = (Button) findViewById(R.id.BtnMul);
         btnDiv = (Button) findViewById(R.id.BtnDiv);
-        textResult = (TextView)findViewById(R.id.Result);
-        calcListener listener = new calcListener();
+        btnRem = (Button) findViewById(R.id.BtnRem);
+        textResult = (TextView)findViewById(R.id.TextResult);
+        clickListener listener = new clickListener();
 
         for(i =0; i< numBtnIDs.length;i++) {
             numButtons[i]= (Button) findViewById(numBtnIDs[i]);
@@ -62,28 +63,44 @@ public class MainActivity extends AppCompatActivity {
         btnSub.setOnClickListener(listener);
         btnMul.setOnClickListener(listener);
         btnDiv.setOnClickListener(listener);
+        btnRem.setOnClickListener(listener);
 
     }
-    class calcListener implements View.OnClickListener
+    class clickListener implements View.OnClickListener
     {
         public void onClick(View arg0) {
             num1=edit1.getText().toString();
             num2=edit2.getText().toString();
+            if(num1.equals("") || num2.equals("")) {
+                Toast.makeText(MainActivity.this,"값을 입력하세요.",Toast.LENGTH_SHORT).show();
+                return;
+            }
             switch(arg0.getId()) {
                 case R.id.BtnAdd:
-                    result = Integer.parseInt(num1) + Integer.parseInt(num2);
+                    result = Double.parseDouble(num1) + Double.parseDouble(num2);
                     break;
                 case R.id.BtnSub:
-                    result = Integer.parseInt(num1) - Integer.parseInt(num2);
+                    result = Double.parseDouble(num1) - Double.parseDouble(num2);
                     break;
                 case R.id.BtnMul:
-                    result = Integer.parseInt(num1) * Integer.parseInt(num2);
+                    result = Double.parseDouble(num1) * Double.parseDouble(num2);
                     break;
                 case R.id.BtnDiv:
-                    result = Integer.parseInt(num1) / Integer.parseInt(num2);
+                    if(num2.equals("0")) {
+                        Toast.makeText(MainActivity.this,"0으로 나눌 수 없습니다.",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    result = Double.parseDouble(num1) / Double.parseDouble(num2);
+                    break;
+                case R.id.BtnRem:
+                    if(num2.equals("0")) {
+                        Toast.makeText(MainActivity.this,"0으로 나눌 수 없습니다.",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    result = Double.parseDouble(num1) % Double.parseDouble(num2);
                     break;
             }
-            textResult.setText("계산결과 : " + result.toString());
+            textResult.setText("calculation Result : " + result.toString());
 
         }
     }
