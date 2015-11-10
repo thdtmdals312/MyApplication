@@ -12,7 +12,7 @@ import android.widget.*;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText name, email;
+    EditText actname, actemail;
     Button btn;
     EditText editName, editEmail;
     TextView toastText;
@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        name = (EditText) findViewById(R.id.UserName);
-        email = (EditText) findViewById(R.id.UserEmail);
+        actname = (EditText) findViewById(R.id.UserName);
+        actemail = (EditText) findViewById(R.id.UserEmail);
         btn = (Button) findViewById(R.id.Btn1);
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -33,15 +33,17 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
                 dlg.setTitle("사용자 정보 입력");
                 dlg.setView(dialogView);
-
+                editName = (EditText) dialogView.findViewById(R.id.EditName);
+                editEmail = (EditText) dialogView.findViewById(R.id.EditEmail);
+                editName.setText(actname.getText().toString());
+                editEmail.setText(actemail.getText().toString());
                 dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        editName = (EditText) dialogView.findViewById(R.id.EditName);
-                        editEmail = (EditText) dialogView.findViewById(R.id.EditEmail);
 
-                        name.setText(editName.getText().toString());
-                        email.setText(editEmail.getText().toString());
+
+                        actname.setText(editName.getText().toString());
+                        actemail.setText(editEmail.getText().toString());
                     }
                 });
 
