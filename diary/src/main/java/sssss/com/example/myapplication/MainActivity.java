@@ -17,50 +17,51 @@ import java.io.IOException;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
-
     DatePicker dp;
-    EditText editDiary;
+    EditText etDiary;
     Button btnWrite;
-    String fileName;
-    @Override
+    String filename;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("간단 일기장");
+
         dp = (DatePicker) findViewById(R.id.datePicker1);
-        editDiary = (EditText) findViewById(R.id.editDiary);
+        etDiary = (EditText) findViewById(R.id.editText1);
         btnWrite = (Button) findViewById(R.id.btnWrite);
 
         Calendar cal = Calendar.getInstance();
         int cYear = cal.get(Calendar.YEAR);
         int cMonth = cal.get(Calendar.MONTH);
         int cDay = cal.get(Calendar.DAY_OF_MONTH);
+
+        filename = "MyDiary_" + Integer.toString(cYear) + Integer.toString(cMonth + 1) + Integer.toString(cDay) + ".txt";
+        etDiary.setText(readDiary(filename));
+        btnWrite.setEnabled(true);
+
         dp.init(cYear, cMonth, cDay, new DatePicker.OnDateChangedListener() {
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                fileName = Integer.toString(year) + "_" + Integer.toString(monthOfYear + 1) + "_"
-                        + Integer.toString(dayOfMonth) + ".txt";
-                String str = readDiary(fileName);
-                editDiary.setText(str);
-                btnWrite.setText("새로 저장");
+                filename = "MyDiary_" + Integer.toString(year) + Integer.toString(monthOfYear + 1) + Integer.toString(dayOfMonth) + ".txt";
+                String str = readDiary(filename);
+                etDiary.setText(str);
+                btnWrite.setEnabled(true);
             }
         });
-
         btnWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    FileOutputStream outFs = openFileOutput(fileName, Context.MODE_WORLD_WRITEABLE);
-                    String str = editDiary.getText().toString();
+                    FileOutputStream outFs = openFileOutput(filename, Context.MODE_WORLD_WRITEABLE);
+                    String str = etDiary.getText().toString();
                     outFs.write(str.getBytes());
-                    outFs.close();
-                    Toast.makeText(getApplicationContext(), fileName+" 이 저장됨", Toast.LENGTH_SHORT).show();
-                } catch(IOException e) {
-
+                    Toast.makeText(getApplicationContext(), filename+ "이 저장됨", Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
                 }
             }
         });
     }
-
     String readDiary(String fName) {
         String diaryStr = null;
         FileInputStream inFs;
@@ -70,16 +71,14 @@ public class MainActivity extends AppCompatActivity {
             inFs.read(txt);
             inFs.close();
             diaryStr = (new String(txt)).trim();
-            if(diaryStr != "") {
-                btnWrite.setText("수정하기");
-            }
-        } catch (IOException e) {
-            editDiary.setHint("일기 없음");
+            btnWrite.setText("수정하기");
+        } catch (IOException e)
+        {
+            etDiary.setHint("일기 없음");
             btnWrite.setText("새로 저장");
         }
         return diaryStr;
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
