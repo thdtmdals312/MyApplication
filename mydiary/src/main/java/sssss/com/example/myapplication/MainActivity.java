@@ -53,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         editInput = (EditText)findViewById(R.id.EditInput);
 
         viewDate.setText(Integer.toString(cYear) + "년 " + Integer.toString(cMonth+1) + "월 " + Integer.toString(cDay) + "일");
+        filename = makeDiaryFileName(cYear, cMonth+1, cDay); // 파일명 정의
+        String str = readDiary(filename);
+        editInput.setText(str);
         viewDate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v ) { // 날짜를 표시한 TextView를 터치하면 DatePicker의 위젯을 가지고 있는 다이얼로그가 나타나는 클릭리스너
                 dialogView = (View) View.inflate(MainActivity.this, R.layout.dialog, null);
