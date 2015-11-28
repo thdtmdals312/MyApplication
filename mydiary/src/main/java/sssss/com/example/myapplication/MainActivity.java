@@ -62,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
                 dlg.setView(dialogView);
 
-                dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() { // 날짜를 선택하고 확인버튼을 누르면 MainActivity의 날짜 표시 TextView의 내용이 선택된 날짜로 변경되고, 해당 날짜의 일기가 존재하면 읽어온다.
+                dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() { // 날짜를 선택하고 확인버튼을 누르면 MainActivity의 날짜 표시 TextView의 내용이
+                                                                                       // 선택된 날짜로 변경되고, 해당 날짜의 일기가 존재하면 읽어온다.
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         viewDate.setText(today);
