@@ -35,19 +35,24 @@ public class MainActivity extends AppCompatActivity {
     String today; // 선택날짜
     LinearLayout baseLayout;
     Calendar cal = Calendar.getInstance();
-    int cYear = cal.get(Calendar.YEAR);
-    int cMonth = cal.get(Calendar.MONTH);
-    int cDay = cal.get(Calendar.DAY_OF_MONTH);
+    int cYear;
+    int cMonth;
+    int cDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("일기장앱만들기");
+        cYear = cal.get(Calendar.YEAR);
+        cMonth = cal.get(Calendar.MONTH);
+        cDay = cal.get(Calendar.DAY_OF_MONTH);
 
         viewDate = (TextView) findViewById(R.id.ViewDate);
         btnSave = (Button) findViewById(R.id.BtnSave);
         editInput = (EditText)findViewById(R.id.EditInput);
+
+        viewDate.setText(Integer.toString(cYear) + "년 " + Integer.toString(cMonth+1) + "월 " + Integer.toString(cDay) + "일");
         viewDate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v ) { // 날짜를 표시한 TextView를 터치하면 DatePicker의 위젯을 가지고 있는 다이얼로그가 나타나는 클릭리스너
                 dialogView = (View) View.inflate(MainActivity.this, R.layout.dialog, null);
